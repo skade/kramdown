@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.license = 'MIT'
 
   #### Dependencies, requirements and files
-  s.files = FileList.new([
+  s.files = Rake::FileList.new([
                             'Rakefile',
                             'setup.rb',
                             'COPYING', 'README.md', 'AUTHORS',
