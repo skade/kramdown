@@ -1,3 +1,5 @@
+require 'rake/file_list'
+
 Gem::Specification.new do |s|
 
   #### Basic information
