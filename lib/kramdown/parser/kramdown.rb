@@ -125,7 +125,11 @@ module Kramdown
             block_ial_set = @block_ial
             @block_parsers.any? do |name|
               if @src.check(@parsers[name].start_re)
-                send(@parsers[name].method)
+                begin_line = current_line_number(@src)
+                result = send(@parsers[name].method)
+                end_line = current_line_number(@src)
+                @tree.children.last.attr[:"data-lines"] = "#{begin_line}..#{end_line - 1}"
+                result
               else
                 false
               end
@@ -139,6 +143,10 @@ module Kramdown
 
         @tree, @src, @block_ial = *@stack.pop
         status
+      end
+
+      def current_line_number(scanner)
+        scanner.string[0..scanner.pos].count("\n") + 1;
       end
 
       # Update the tree by parsing all :+raw_text+ elements with the span-level parser (resets the
